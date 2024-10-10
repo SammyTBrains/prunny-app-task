@@ -2,13 +2,16 @@ import { View, Text, TextInput, Button } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { authState, setToken } from "@/store/auth";
 import { Controller, useForm } from "react-hook-form";
+import { FIREBASE_AUTH } from "@/utils/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 type FormData = {
-  phoneNumber: string;
+  email: string;
   password: string;
 };
 
 export default function Login() {
+  const auth = FIREBASE_AUTH;
   const token = useSelector((state: { auth: authState }) => state.auth.token);
 
   const dispatch = useDispatch();
@@ -17,6 +20,8 @@ export default function Login() {
     dispatch(setToken({ token: "123" }));
   };
 
+  const signIn = async () => {};
+
   const {
     control,
     handleSubmit,
@@ -24,12 +29,23 @@ export default function Login() {
   } = useForm<FormData>({
     mode: "onBlur",
     defaultValues: {
-      phoneNumber: "",
+      email: "",
       password: "",
     },
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: FormData) => {
+    try {
+      const user = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      console.log("user", user);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <View>
@@ -43,9 +59,8 @@ export default function Login() {
               message: "This is required.",
             },
             pattern: {
-              value: /^0\d{10}$/,
-              message:
-                "Invalid phone number. It should be 11 digits starting with 0.",
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "Invalid email address.",
             },
           }}
           render={({ field: { onChange, onBlur, value } }) => {
@@ -54,16 +69,18 @@ export default function Login() {
                 onBlur={onBlur}
                 onChangeText={(text) => onChange(text)}
                 value={value}
-                keyboardType="phone-pad"
-                placeholder="Phone Number"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                placeholder="Email"
+                className="rounded-2xl px-4 py-2 border-4 border-red-100"
               />
             );
           }}
-          name="phoneNumber"
+          name="email"
         />
 
-        {errors.phoneNumber && (
-          <Text className="text-red">{errors.phoneNumber.message}</Text>
+        {errors.email && (
+          <Text className="text-red">{errors.email.message}</Text>
         )}
 
         <Controller
@@ -92,6 +109,7 @@ export default function Login() {
               value={value}
               secureTextEntry
               placeholder="Password"
+              className="rounded-2xl px-4 py-2 border-4 border-red-100"
             />
           )}
           name="password"

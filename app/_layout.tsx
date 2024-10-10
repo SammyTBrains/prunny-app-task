@@ -27,12 +27,12 @@ export default function RootLayout() {
 
   return (
     <>
-    <Provider store={store}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-      </Stack>
-     
-      {/* <CheckAuth /> */}
+      <Provider store={store}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+        </Stack>
+
+        {/* <CheckAuth /> */}
       </Provider>
     </>
   );
