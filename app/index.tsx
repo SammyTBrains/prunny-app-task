@@ -1,99 +1,75 @@
-import { View, Text, TextInput, Button } from "react-native";
-import { Controller, useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { Entypo, MaterialIcons } from "@expo/vector-icons";
 
-type FormData = {
-  email: string;
-  password: string;
-};
-
-export default function Login() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    mode: "onBlur",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = () => {};
+export default function LoginScreen() {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <View className="container flex-1 items-center">
-      <Text>Login Screen</Text>
-      <View className="justify-center items-center py-5 mb-[15px]">
-        <Controller
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: "This is required.",
-            },
-            pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-              message: "Invalid email address.",
-            },
-          }}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return (
-              <TextInput
-                onBlur={onBlur}
-                onChangeText={(text) => onChange(text)}
-                value={value}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                placeholder="Email"
-                className="rounded-2xl px-4 py-2 border-4 border-red-100"
-              />
-            );
-          }}
-          name="email"
-        />
+    <View className="flex-1 bg-white items-center justify-center">
+      <View className="w-4/5 max-w-xs">
+        <Text className="text-2xl font-bold mb-2">Welcome Back</Text>
+        <Text className="text-sm text-gray-500 mb-6">
+          Log into your account and continue to make your transactions easily
+        </Text>
 
-        {errors.email && (
-          <Text className="text-red">{errors.email.message}</Text>
-        )}
+        <View className="mb-4 relative">
+          <TextInput
+            className="border border-gray-300 rounded-lg p-3 text-base"
+            placeholder="Phone Number"
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}
+            keyboardType="phone-pad"
+          />
+        </View>
 
-        <Controller
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: "This is required.",
-            },
-            minLength: { value: 4, message: "Password too short." },
-            maxLength: { value: 12, message: "Password too long." },
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            // <FloatingInput
-            //   containerStyle={{ marginTop: 16 }}
-            //   label='Password'
-            //   rightElement={
-            //     <TouchableOpacity onPress={() => alert("Forgot password?")}>
-            //       <Text style={styles.forgotText}>Forgot?</Text>
-            //     </TouchableOpacity>
-            //   }
-            // />
-            <TextInput
-              onBlur={onBlur}
-              onChangeText={(text) => onChange(text)}
-              value={value}
-              secureTextEntry
-              placeholder="Password"
-              className="rounded-2xl px-4 py-2 border-4 border-red-100"
-            />
-          )}
-          name="password"
-        />
+        <View className="mb-4 relative">
+          <TextInput
+            className="border border-gray-300 rounded-lg p-3 pr-10 text-base"
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={!showPassword}
+          />
+          <TouchableOpacity
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <Entypo name="eye" size={24} color="#6b7280" />
+            ) : (
+              <Entypo name="eye-with-line" size={24} color="#6b7280" />
+            )}
+          </TouchableOpacity>
+        </View>
 
-        {errors.password && (
-          <Text className="text-red">{errors.password.message}</Text>
-        )}
+        <TouchableOpacity className="self-start mb-6">
+          <Text className="text-gray-500 text-sm">Forgot Password</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity className="bg-purple-500 rounded-lg p-4 flex-row items-center justify-center mb-6">
+          <Text className="text-white text-base font-bold mr-2">Log In</Text>
+          <MaterialIcons
+            name="fingerprint"
+            size={24}
+            color="white"
+            className="ml-2"
+          />
+        </TouchableOpacity>
+
+        <View className="flex-row justify-center">
+          <Text className="text-gray-500 text-sm">
+            I don't have an account?{" "}
+          </Text>
+          <TouchableOpacity>
+            <Text className="text-purple-500 text-sm font-bold">
+              Create Account
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <Button onPress={handleSubmit(onSubmit)} title="Login" />
     </View>
   );
 }
