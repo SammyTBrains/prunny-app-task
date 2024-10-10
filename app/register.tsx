@@ -1,26 +1,29 @@
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { authState, setToken } from "@/store/auth";
 import { Controller, useForm } from "react-hook-form";
-import { FIREBASE_AUTH } from "@/utils/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUser } from "@/utils/auth";
+import { useState } from "react";
+import colors from "@/constants/myApp/colors";
+import CustomButton from "@/components/myApp/CustomButton";
 
 type FormData = {
   email: string;
   password: string;
 };
 
-export default function Login() {
-  const auth = FIREBASE_AUTH;
+export default function Register() {
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
   const token = useSelector((state: { auth: authState }) => state.auth.token);
 
   const dispatch = useDispatch();
 
-  const login = () => {
+  const register = () => {
     dispatch(setToken({ token: "123" }));
   };
 
-  const signIn = async () => {};
+  const signUp = async () => {};
 
   const {
     control,
@@ -36,11 +39,9 @@ export default function Login() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const user = await signInWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
+      setIsAuthenticating(true);
+      const user = await createUser(data.email, data.password);
+      setIsAuthenticating(false);
       console.log("user", user);
     } catch (error) {
       console.log("error", error);
@@ -119,7 +120,14 @@ export default function Login() {
           <Text className="text-red">{errors.password.message}</Text>
         )}
       </View>
-      <Button onPress={handleSubmit(onSubmit)} title="Login" />
+
+      <CustomButton onPress={handleSubmit(onSubmit)}>
+        {isAuthenticating ? (
+          <ActivityIndicator color="white" size={"large"} />
+        ) : (
+          "Login"
+        )}
+      </CustomButton>
     </View>
   );
 }
