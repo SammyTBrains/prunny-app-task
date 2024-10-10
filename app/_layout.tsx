@@ -1,8 +1,10 @@
 // import CheckAuth from "@/components/myApp/CheckAuth";
+import { store } from "@/store/store";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { Provider } from "react-redux";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,10 +27,13 @@ export default function RootLayout() {
 
   return (
     <>
+    <Provider store={store}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
       </Stack>
+     
       {/* <CheckAuth /> */}
+      </Provider>
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { Tabs } from "expo-router";
 import { AntDesign, FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import colors from "@/components/myApp/colors";
+import colors from "@/constants/myApp/colors";
 
 export default function TabsLayout() {
   return (
