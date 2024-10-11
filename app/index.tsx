@@ -7,7 +7,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import { Entypo, MaterialIcons } from "@expo/vector-icons";
+import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 
 export default function LoginScreen() {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -15,19 +15,19 @@ export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <View className="flex-1 bg-white items-center pt-20">
+    <View className="flex-1 bg-white items-center pt-16">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="w-4/5 max-w-xs">
-          <Text className="text-2xl font-bold mb-6 text-primary-dark">
+          <Text className="text-lg font-[roboto-bold] mb-3 text-primary-dark">
             Welcome Back
           </Text>
-          <Text className="text-sm mb-14 text-primary-dark opacity-80">
+          <Text className="text-sm mb-11 font-[roboto] text-primary-dark opacity-80">
             Log into your account and continue to make your transactions easily
           </Text>
 
-          <View className="mb-9 w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
+          <View className="mb-7 w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
             <TextInput
-              className="text-sm"
+              className="text-sm font-[roboto]"
               placeholder="Phone Number"
               value={phoneNumber}
               onChangeText={setPhoneNumber}
@@ -35,9 +35,9 @@ export default function LoginScreen() {
             />
           </View>
 
-          <View className="mb-4 w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
+          <View className="mb-7 w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
             <TextInput
-              className="text-sm"
+              className="text-sm font-[roboto]"
               placeholder="Password"
               value={password}
               onChangeText={setPassword}
@@ -55,11 +55,16 @@ export default function LoginScreen() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity className="self-start mb-6">
-            <Text className="text-gray-500 text-sm">Forgot Password</Text>
-          </TouchableOpacity>
+          <View className="mb-20 flex flex-row items-center gap-2">
+            <FontAwesome name="lock" size={20} color="black" />
+            <TouchableOpacity>
+              <Text className="font-[roboto] text-primary-dark text-sm">
+                Forgot Password
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity className="bg-purple-500 rounded-lg p-4 flex-row items-center justify-center mb-6">
+          <TouchableOpacity className="bg-primary rounded-[80px] p-4 flex-row items-center justify-center mb-20">
             <Text className="text-white text-base font-bold mr-2">Log In</Text>
             <MaterialIcons
               name="fingerprint"
