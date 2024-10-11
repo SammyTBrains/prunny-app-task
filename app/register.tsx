@@ -1,189 +1,91 @@
-import { useState } from "react";
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
-  Keyboard,
-  TouchableWithoutFeedback,
+  SafeAreaView,
 } from "react-native";
-import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
-import colors from "@/constants/myApp/colors";
 
 type FormData = {
   phoneNumber: string;
-  password: string;
 };
 
-export default function Register() {
-  const [showPassword, setShowPassword] = useState(false);
-
+export default function GetStarted() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm<FormData>({
-    mode: "onBlur",
     defaultValues: {
       phoneNumber: "",
-      password: "",
     },
   });
 
-  const onSubmit = () => {};
-
-  let canSubmit;
-
-  if (
-    getValues("phoneNumber") &&
-    getValues("password") &&
-    !errors.phoneNumber &&
-    !errors.password
-  ) {
-    canSubmit = true;
-  } else {
-    canSubmit = false;
-  }
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+    // Handle form submission
+  };
 
   return (
-    <View className="flex-1 bg-white items-center pt-20">
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View className="w-4/5 max-w-xs">
-          <Text className="text-lg font-[roboto-bold] mb-3 text-primary-dark">
-            Welcome Back
-          </Text>
-          <Text className="text-sm mb-11 font-[roboto] text-primary-dark opacity-80">
-            Log into your account and continue to make your transactions easily
-          </Text>
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="px-4 pt-4">
+        <TouchableOpacity>
+          <Ionicons name="chevron-back" size={28} color="#291539" />
+        </TouchableOpacity>
+      </View>
+      <View className="px-4 mt-6">
+        <Text className="text-lg font-[roboto-bold] text-primary-dark">
+          Get Started
+        </Text>
+        <Text className="text-sm font-[roboto] text-primary-dark mt-2 opacity-80">
+          Start making your payments, settling your bills easily and faster
+        </Text>
 
-          <View className="mb-7 gap-1">
-            <Controller
-              control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: "This is required.",
-                },
-                pattern: {
-                  value: /^0\d{10}$/,
-                  message:
-                    "Invalid phone number. It should be 11 digits starting with 0.",
-                },
-              }}
-              render={({ field: { onChange, onBlur, value } }) => {
-                return (
-                  <View className="w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
-                    <TextInput
-                      onBlur={onBlur}
-                      onChangeText={(text) => onChange(text)}
-                      value={value}
-                      className="text-sm font-[roboto]"
-                      placeholder="Phone Number"
-                      keyboardType="phone-pad"
-                    />
-                  </View>
-                );
-              }}
-              name="phoneNumber"
-            />
-
-            {errors.phoneNumber && (
-              <Text style={{ color: "red" }}>{errors.phoneNumber.message}</Text>
+        <View className="mt-10">
+          <Controller
+            control={control}
+            rules={{
+              required: "Phone number is required",
+              pattern: {
+                value: /^\d+$/,
+                message: "Please enter a valid phone number",
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View className="flex-row justify-center items-center borderw-80 h-14 border border-[#2d114510] rounded-[5px]">
+                <Text className="text-base mr-2">+234</Text>
+                <TextInput
+                  placeholder="Type your phone number"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  keyboardType="phone-pad"
+                  className="flex-1 py-2 text-base"
+                />
+              </View>
             )}
-          </View>
-
-          <View className="mb-7 gap-1">
-            <Controller
-              control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: "This is required.",
-                },
-                minLength: { value: 4, message: "Password too short." },
-                maxLength: { value: 12, message: "Password too long." },
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <View className="w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
-                  <TextInput
-                    className="text-sm font-[roboto]"
-                    placeholder="Password"
-                    onBlur={onBlur}
-                    onChangeText={(text) => onChange(text)}
-                    value={value}
-                    secureTextEntry={!showPassword}
-                  />
-                  <TouchableOpacity
-                    className="absolute right-3 top-[60%]"
-                    onPress={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <Entypo name="eye" size={24} color="#6b7280" />
-                    ) : (
-                      <Entypo name="eye-with-line" size={24} color="#6b7280" />
-                    )}
-                  </TouchableOpacity>
-                </View>
-              )}
-              name="password"
-            />
-
-            {errors.password && (
-              <Text style={{ color: "red" }}>{errors.password.message}</Text>
-            )}
-          </View>
-
-          <View className="mb-20 flex flex-row items-center gap-2">
-            <FontAwesome name="lock" size={20} color="black" />
-            <TouchableOpacity>
-              <Text className="font-[roboto] text-primary-dark text-sm">
-                Forgot Password
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View className="flex-row items-center justify-between mb-24">
-            <TouchableOpacity
-              className="rounded-[80px] w-[246px] h-[54px] items-center justify-center"
-              style={
-                canSubmit
-                  ? { backgroundColor: colors.primary }
-                  : { backgroundColor: colors.primaryLight }
-              }
-              onPress={handleSubmit(onSubmit)}
-              disabled={!canSubmit}
-            >
-              <Text className="font-[roboto-medium] text-white text-base">
-                Log In
-              </Text>
-            </TouchableOpacity>
-            <View
-              className="w-[58px] h-[54px] rounded-full justify-center items-center border-spacing-4"
-              style={{
-                shadowColor: "#000",
-                shadowOpacity: 0.1,
-                shadowRadius: 5,
-                shadowOffset: { width: 0, height: 5 },
-              }}
-            >
-              <MaterialIcons name="fingerprint" size={30} color="#B1B1B1" />
-            </View>
-          </View>
-
-          <View className="flex-row justify-center">
-            <Text className="font-[roboto-medium] text-primary-dark text-sm">
-              I don't have an account?{" "}
+            name="phoneNumber"
+          />
+          {errors.phoneNumber && (
+            <Text className="text-red-500 mt-1">
+              {errors.phoneNumber.message}
             </Text>
-            <TouchableOpacity>
-              <Text className="text-primary text-sm font-[roboto-bold]">
-                Create Account
-              </Text>
-            </TouchableOpacity>
-          </View>
+          )}
         </View>
-      </TouchableWithoutFeedback>
-    </View>
+
+        <Text className="text-xs text-[#2D1145] mt-4 opacity-70">
+          By adding your phone number, you agree to Prunny Terms & Conditions
+        </Text>
+
+        <TouchableOpacity
+          className="bg-[#C8A2C8] rounded-full py-4 mt-auto mb-8"
+          onPress={handleSubmit(onSubmit)}
+        >
+          <Text className="text-white text-center font-semibold">Continue</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }

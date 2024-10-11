@@ -7,6 +7,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Platform,
+  SafeAreaView,
 } from "react-native";
 import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
@@ -52,7 +53,7 @@ export default function LoginScreen() {
   }
 
   return (
-    <View className="flex-1 bg-white items-center pt-20">
+    <SafeAreaView className="flex-1 bg-white items-center pt-20">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="w-4/5 max-w-xs">
           <Text className="text-lg font-[roboto-bold] mb-3 text-primary-dark">
@@ -195,6 +196,6 @@ export default function LoginScreen() {
           </View>
         </View>
       </TouchableWithoutFeedback>
-    </View>
+    </SafeAreaView>
   );
 }
