@@ -53,9 +53,9 @@ export default function LoginScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white items-center pt-20">
+    <SafeAreaView className="flex-1 bg-white items-center">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View className="w-4/5 max-w-xs">
+        <View className="w-[80%] mt-20">
           <Text className="text-lg font-[roboto-bold] mb-3 text-primary-dark">
             Welcome Back
           </Text>
