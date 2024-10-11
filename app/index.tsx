@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,12 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
 import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
 import colors from "@/constants/myApp/colors";
+import { useRouter } from "expo-router";
 
 type FormData = {
   phoneNumber: string;
@@ -17,6 +19,8 @@ type FormData = {
 };
 
 export default function LoginScreen() {
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -160,12 +164,19 @@ export default function LoginScreen() {
               </Text>
             </TouchableOpacity>
             <View
-              className="w-[58px] h-[54px] rounded-full justify-center items-center border-spacing-4"
+              className="w-[58px] h-[54px] rounded-full justify-center items-center"
               style={{
-                shadowColor: "#000",
-                shadowOpacity: 0.1,
-                shadowRadius: 5,
-                shadowOffset: { width: 0, height: 5 },
+                ...Platform.select({
+                  ios: {
+                    shadowColor: "#000",
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 8,
+                  },
+                  android: {
+                    elevation: 5,
+                  },
+                }),
               }}
             >
               <MaterialIcons name="fingerprint" size={30} color="#B1B1B1" />
@@ -176,7 +187,7 @@ export default function LoginScreen() {
             <Text className="font-[roboto-medium] text-primary-dark text-sm">
               I don't have an account?{" "}
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push("/register")}>
               <Text className="text-primary text-sm font-[roboto-bold]">
                 Create Account
               </Text>
