@@ -77,7 +77,7 @@ export default function LoginScreen() {
             />
 
             {errors.phoneNumber && (
-              <Text className="text-red">{errors.phoneNumber.message}</Text>
+              <Text style={{ color: "red" }}>{errors.phoneNumber.message}</Text>
             )}
           </View>
 
@@ -118,7 +118,7 @@ export default function LoginScreen() {
             />
 
             {errors.password && (
-              <Text className="text-red">{errors.password.message}</Text>
+              <Text style={{ color: "red" }}>{errors.password.message}</Text>
             )}
           </View>
 
