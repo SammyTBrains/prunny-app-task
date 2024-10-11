@@ -46,6 +46,7 @@ export default function Register() {
     getValues,
     formState: { errors },
   } = useForm<FormData>({
+    mode: "onBlur",
     defaultValues: {
       phoneNumber: "",
     },
@@ -123,7 +124,7 @@ export default function Register() {
                         placeholder="Type your phone number"
                         placeholderTextColor={colors.primaryDark50}
                         onBlur={onBlur}
-                        onChangeText={onChange}
+                        onChangeText={(text) => onChange(text)}
                         value={value}
                         keyboardType="phone-pad"
                         className="text-sm font-[roboto]"
