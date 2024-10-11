@@ -16,6 +16,7 @@ import CountryPicker, {
 } from "react-native-country-picker-modal";
 import { useEffect, useState } from "react";
 import colors from "@/constants/myApp/colors";
+import { useRouter } from "expo-router";
 
 type FormData = {
   phoneNumber: string;
@@ -25,6 +26,8 @@ export default function Register() {
   const [countryCode, setCountryCode] = useState<CountryCode>("NG");
   const [country, setCountry] = useState<Country | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const router = useRouter();
 
   //Warning for the country picker package, this is a temporary fix
   useEffect(() => {
@@ -63,13 +66,13 @@ export default function Register() {
 
   return (
     <SafeAreaView className="flex-1 bg-white items-center">
-      <View className="ml-4 px-4 pt-4 self-start">
-        <TouchableOpacity>
-          <Ionicons name="chevron-back" size={28} color="#291539" />
-        </TouchableOpacity>
-      </View>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="w-[90%] items-center">
+          <View className="px-4 pt-4 self-start">
+            <TouchableOpacity onPress={() => router.back()}>
+              <Ionicons name="chevron-back" size={28} color="#291539" />
+            </TouchableOpacity>
+          </View>
           <View className="px-4 mt-9">
             <Text className="text-lg font-[roboto-bold] text-primary-dark">
               Get Started
