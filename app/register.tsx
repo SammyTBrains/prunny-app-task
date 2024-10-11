@@ -121,6 +121,7 @@ export default function Register() {
                     <View className="w-[50%] mt-[-3.5px]">
                       <TextInput
                         placeholder="Type your phone number"
+                        placeholderTextColor={colors.primaryDark50}
                         onBlur={onBlur}
                         onChangeText={onChange}
                         value={value}

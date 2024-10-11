@@ -86,6 +86,7 @@ export default function LoginScreen() {
                       value={value}
                       className="text-sm font-[roboto]"
                       placeholder="Phone Number"
+                      placeholderTextColor={colors.primaryDark50}
                       keyboardType="phone-pad"
                     />
                   </View>
@@ -115,6 +116,7 @@ export default function LoginScreen() {
                   <TextInput
                     className="text-sm font-[roboto]"
                     placeholder="Password"
+                    placeholderTextColor={colors.primaryDark50}
                     onBlur={onBlur}
                     onChangeText={(text) => onChange(text)}
                     value={value}
