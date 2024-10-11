@@ -15,6 +15,7 @@ import CountryPicker, {
   CountryCode,
 } from "react-native-country-picker-modal";
 import { useEffect, useState } from "react";
+import colors from "@/constants/myApp/colors";
 
 type FormData = {
   phoneNumber: string;
@@ -39,6 +40,7 @@ export default function Register() {
   const {
     control,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -51,15 +53,23 @@ export default function Register() {
     // Handle form submission
   };
 
+  let canSubmit;
+
+  if (getValues("phoneNumber") && !errors.phoneNumber) {
+    canSubmit = true;
+  } else {
+    canSubmit = false;
+  }
+
   return (
     <SafeAreaView className="flex-1 bg-white items-center">
+      <View className="ml-4 px-4 pt-4 self-start">
+        <TouchableOpacity>
+          <Ionicons name="chevron-back" size={28} color="#291539" />
+        </TouchableOpacity>
+      </View>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View className="w-[90%]">
-          <View className="px-4 pt-4">
-            <TouchableOpacity>
-              <Ionicons name="chevron-back" size={28} color="#291539" />
-            </TouchableOpacity>
-          </View>
+        <View className="w-[90%] items-center">
           <View className="px-4 mt-9">
             <Text className="text-lg font-[roboto-bold] text-primary-dark">
               Get Started
@@ -72,14 +82,18 @@ export default function Register() {
               <Controller
                 control={control}
                 rules={{
-                  required: "Phone number is required",
+                  required: {
+                    value: true,
+                    message: "This is required.",
+                  },
                   pattern: {
-                    value: /^\d+$/,
-                    message: "Please enter a valid phone number",
+                    value: /^(0?\d{10}|\d{10})$/,
+                    message:
+                      "Invalid phone number. It should be 10 or 11 digits, optionally starting with 0.",
                   },
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <View className="flex-row items-center borderw-80 h-14 border border-[#2d114510] rounded-[5px]">
+                  <View className="flex-row w-80 items-center borderw-80 h-14 border border-[#2d114510] rounded-[5px]">
                     <TouchableOpacity
                       className="flex-row items-center p-2 mr-2"
                       onPress={() => setModalVisible(true)}
@@ -116,22 +130,32 @@ export default function Register() {
                 name="phoneNumber"
               />
               {errors.phoneNumber && (
-                <Text className="text-red-500 mt-1">
+                <Text className="text-red mt-1">
                   {errors.phoneNumber.message}
                 </Text>
               )}
             </View>
 
-            <Text className="text-xs text-[#2D1145] mt-4 opacity-70">
-              By adding your phone number, you agree to Prunny Terms &
-              Conditions
-            </Text>
+            <View className="w-80 h-[60px] justify-center px-5 rounded-[5px] bg-[#FAF5FF] mt-6">
+              <Text className="text-xs font-[roboto] text-[#2D1145]">
+                By adding your phone number, you agree to{" "}
+                <Text className="font-[roboto-bold]">
+                  Prunny Terms & Conditions
+                </Text>
+              </Text>
+            </View>
 
             <TouchableOpacity
-              className="bg-[#C8A2C8] rounded-full py-4 mt-auto mb-8"
+              className="mt-60 rounded-full py-4 w-80"
               onPress={handleSubmit(onSubmit)}
+              style={
+                canSubmit
+                  ? { backgroundColor: colors.primary }
+                  : { backgroundColor: colors.primaryLight }
+              }
+              disabled={!canSubmit}
             >
-              <Text className="text-white text-center font-semibold">
+              <Text className="text-white text-center font-[roboto-medium] text-base">
                 Continue
               </Text>
             </TouchableOpacity>
