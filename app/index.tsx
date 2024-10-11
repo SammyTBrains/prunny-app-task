@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
-import { Colors } from "@/constants/Colors";
 import colors from "@/constants/myApp/colors";
 
 type FormData = {
@@ -18,14 +17,13 @@ type FormData = {
 };
 
 export default function LoginScreen() {
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<FormData>({
     mode: "onBlur",
     defaultValues: {
@@ -35,6 +33,19 @@ export default function LoginScreen() {
   });
 
   const onSubmit = () => {};
+
+  let canSubmit;
+
+  if (
+    getValues("phoneNumber") &&
+    getValues("password") &&
+    !errors.phoneNumber &&
+    !errors.password
+  ) {
+    canSubmit = true;
+  } else {
+    canSubmit = false;
+  }
 
   return (
     <View className="flex-1 bg-white items-center pt-20">
@@ -137,11 +148,12 @@ export default function LoginScreen() {
             <TouchableOpacity
               className="rounded-[80px] w-[246px] h-[54px] items-center justify-center"
               style={
-                !errors.phoneNumber && !errors.password
+                canSubmit
                   ? { backgroundColor: colors.primary }
                   : { backgroundColor: colors.primaryLight }
               }
               onPress={handleSubmit(onSubmit)}
+              disabled={!canSubmit}
             >
               <Text className="font-[roboto-medium] text-white text-base">
                 Log In
