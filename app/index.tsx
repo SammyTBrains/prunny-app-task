@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
+import { Colors } from "@/constants/Colors";
+import colors from "@/constants/myApp/colors";
 
 type FormData = {
   phoneNumber: string;
@@ -132,7 +134,15 @@ export default function LoginScreen() {
           </View>
 
           <View className="flex-row items-center justify-between mb-24">
-            <TouchableOpacity className="bg-primary rounded-[80px] w-[246px] h-[54px] items-center justify-center">
+            <TouchableOpacity
+              className="rounded-[80px] w-[246px] h-[54px] items-center justify-center"
+              style={
+                !errors.phoneNumber && !errors.password
+                  ? { backgroundColor: colors.primary }
+                  : { backgroundColor: colors.primaryLight }
+              }
+              onPress={handleSubmit(onSubmit)}
+            >
               <Text className="font-[roboto-medium] text-white text-base">
                 Log In
               </Text>
