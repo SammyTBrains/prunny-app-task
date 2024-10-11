@@ -8,11 +8,31 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { Controller, useForm } from "react-hook-form";
+
+type FormData = {
+  phoneNumber: string;
+  password: string;
+};
 
 export default function LoginScreen() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    mode: "onBlur",
+    defaultValues: {
+      phoneNumber: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = () => {};
 
   return (
     <View className="flex-1 bg-white items-center pt-20">
@@ -25,34 +45,81 @@ export default function LoginScreen() {
             Log into your account and continue to make your transactions easily
           </Text>
 
-          <View className="mb-7 w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
-            <TextInput
-              className="text-sm font-[roboto]"
-              placeholder="Phone Number"
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-              keyboardType="phone-pad"
+          <View className="mb-7 gap-1">
+            <Controller
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: "This is required.",
+                },
+                pattern: {
+                  value: /^0\d{10}$/,
+                  message:
+                    "Invalid phone number. It should be 11 digits starting with 0.",
+                },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => {
+                return (
+                  <View className="w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
+                    <TextInput
+                      onBlur={onBlur}
+                      onChangeText={(text) => onChange(text)}
+                      value={value}
+                      className="text-sm font-[roboto]"
+                      placeholder="Phone Number"
+                      keyboardType="phone-pad"
+                    />
+                  </View>
+                );
+              }}
+              name="phoneNumber"
             />
+
+            {errors.phoneNumber && (
+              <Text className="text-red">{errors.phoneNumber.message}</Text>
+            )}
           </View>
 
-          <View className="mb-7 w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
-            <TextInput
-              className="text-sm font-[roboto]"
-              placeholder="Password"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-            />
-            <TouchableOpacity
-              className="absolute right-3 top-[60%]"
-              onPress={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? (
-                <Entypo name="eye" size={24} color="#6b7280" />
-              ) : (
-                <Entypo name="eye-with-line" size={24} color="#6b7280" />
+          <View className="mb-7 gap-1">
+            <Controller
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: "This is required.",
+                },
+                minLength: { value: 4, message: "Password too short." },
+                maxLength: { value: 12, message: "Password too long." },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <View className="w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
+                  <TextInput
+                    className="text-sm font-[roboto]"
+                    placeholder="Password"
+                    onBlur={onBlur}
+                    onChangeText={(text) => onChange(text)}
+                    value={value}
+                    secureTextEntry={!showPassword}
+                  />
+                  <TouchableOpacity
+                    className="absolute right-3 top-[60%]"
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <Entypo name="eye" size={24} color="#6b7280" />
+                    ) : (
+                      <Entypo name="eye-with-line" size={24} color="#6b7280" />
+                    )}
+                  </TouchableOpacity>
+                </View>
               )}
-            </TouchableOpacity>
+              name="password"
+            />
+
+            {errors.password && (
+              <Text className="text-red">{errors.password.message}</Text>
+            )}
           </View>
 
           <View className="mb-20 flex flex-row items-center gap-2">
@@ -64,26 +131,31 @@ export default function LoginScreen() {
             </TouchableOpacity>
           </View>
 
-          <View className="flex-row items-center justify-between mb-20">
+          <View className="flex-row items-center justify-between mb-24">
             <TouchableOpacity className="bg-primary rounded-[80px] w-[246px] h-[54px] items-center justify-center">
               <Text className="font-[roboto-medium] text-white text-base">
                 Log In
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              className="w-[58px] h-[54px] rounded-full justify-center items-center shadow-lg 
-            elevation-2"
+            <View
+              className="w-[58px] h-[54px] rounded-full justify-center items-center border-spacing-4"
+              style={{
+                shadowColor: "#000",
+                shadowOpacity: 0.1,
+                shadowRadius: 5,
+                shadowOffset: { width: 0, height: 5 },
+              }}
             >
               <MaterialIcons name="fingerprint" size={30} color="#B1B1B1" />
-            </TouchableOpacity>
+            </View>
           </View>
 
           <View className="flex-row justify-center">
-            <Text className="text-gray-500 text-sm">
+            <Text className="font-[roboto-medium] text-primary-dark text-sm">
               I don't have an account?{" "}
             </Text>
             <TouchableOpacity>
-              <Text className="text-purple-500 text-sm font-bold">
+              <Text className="text-primary text-sm font-[roboto-bold]">
                 Create Account
               </Text>
             </TouchableOpacity>
