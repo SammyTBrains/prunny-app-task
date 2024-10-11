@@ -53,7 +53,7 @@ export default function Register() {
   });
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    // console.log(data);
     // Handle form submission
   };
 
