@@ -15,7 +15,7 @@ export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <View className="flex-1 bg-white items-center pt-16">
+    <View className="flex-1 bg-white items-center pt-20">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="w-4/5 max-w-xs">
           <Text className="text-lg font-[roboto-bold] mb-3 text-primary-dark">
@@ -64,15 +64,19 @@ export default function LoginScreen() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity className="bg-primary rounded-[80px] p-4 flex-row items-center justify-center mb-20">
-            <Text className="text-white text-base font-bold mr-2">Log In</Text>
-            <MaterialIcons
-              name="fingerprint"
-              size={24}
-              color="white"
-              className="ml-2"
-            />
-          </TouchableOpacity>
+          <View className="flex-row items-center justify-between mb-20">
+            <TouchableOpacity className="bg-primary rounded-[80px] w-[246px] h-[54px] items-center justify-center">
+              <Text className="font-[roboto-medium] text-white text-base">
+                Log In
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="w-[58px] h-[54px] rounded-full justify-center items-center shadow-lg 
+            elevation-2"
+            >
+              <MaterialIcons name="fingerprint" size={30} color="#B1B1B1" />
+            </TouchableOpacity>
+          </View>
 
           <View className="flex-row justify-center">
             <Text className="text-gray-500 text-sm">
