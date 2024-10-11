@@ -79,9 +79,9 @@ export default function Register() {
                   },
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <View className="flex-row justify-center items-center borderw-80 h-14 border border-[#2d114510] rounded-[5px]">
+                  <View className="flex-row items-center borderw-80 h-14 border border-[#2d114510] rounded-[5px]">
                     <TouchableOpacity
-                      className="flex-row items-center p-2 border-r border-gray-300"
+                      className="flex-row items-center p-2 mr-2"
                       onPress={() => setModalVisible(true)}
                     >
                       <CountryPicker
@@ -95,20 +95,22 @@ export default function Register() {
                         onSelect={onSelect}
                         visible={modalVisible}
                       />
-                      <Text className="ml-2">
+                      <Text className="ml-2 text-sm font-[roboto]">
                         {!country?.callingCode[0]
                           ? "+234"
                           : "+" + country?.callingCode[0]}
                       </Text>
                     </TouchableOpacity>
-                    <TextInput
-                      placeholder="Type your phone number"
-                      onBlur={onBlur}
-                      onChangeText={onChange}
-                      value={value}
-                      keyboardType="phone-pad"
-                      className="flex-1 py-2 text-base"
-                    />
+                    <View className="w-[50%] mt-[-3.5px]">
+                      <TextInput
+                        placeholder="Type your phone number"
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        keyboardType="phone-pad"
+                        className="text-sm font-[roboto]"
+                      />
+                    </View>
                   </View>
                 )}
                 name="phoneNumber"
