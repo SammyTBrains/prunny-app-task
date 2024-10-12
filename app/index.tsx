@@ -39,18 +39,11 @@ export default function LoginScreen() {
 
   const onSubmit = () => {};
 
-  let canSubmit;
-
-  if (
-    getValues("phoneNumber") &&
-    getValues("password") &&
+  let canSubmit =
+    getValues("phoneNumber").trim().length > 0 &&
+    getValues("password").trim().length > 0 &&
     !errors.phoneNumber &&
-    !errors.password
-  ) {
-    canSubmit = true;
-  } else {
-    canSubmit = false;
-  }
+    !errors.password;
 
   return (
     <SafeAreaView className="flex-1 bg-white items-center">
