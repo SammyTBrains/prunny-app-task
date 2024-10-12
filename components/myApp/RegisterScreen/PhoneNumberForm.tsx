@@ -13,7 +13,11 @@ type FormData = {
   phoneNumber: string;
 };
 
-export default function PhoneNumberForm() {
+interface PhoneNumberFormProps {
+  onContinue: () => void;
+}
+
+export default function PhoneNumberForm(props: PhoneNumberFormProps) {
   const [countryCode, setCountryCode] = useState<CountryCode>("NG");
   const [country, setCountry] = useState<Country | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,7 +41,7 @@ export default function PhoneNumberForm() {
     getValues,
     formState: { errors },
   } = useForm<FormData>({
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues: {
       phoneNumber: "",
     },
@@ -45,7 +49,7 @@ export default function PhoneNumberForm() {
 
   const onSubmit = (data: FormData) => {
     // console.log(data);
-    // Handle form submission
+    props.onContinue();
   };
 
   let canSubmit =

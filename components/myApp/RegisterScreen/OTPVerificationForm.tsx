@@ -9,9 +9,13 @@ type FormData = {
   otp: string;
 };
 
-export default function OTPVerificationForm() {
+interface OTPVerificationFormProps {
+  onContinue: () => void;
+  onBack: () => void;
+}
+
+export default function OTPVerificationForm(props: OTPVerificationFormProps) {
   const [timer, setTimer] = useState(59);
-  const router = useRouter();
   const inputRefs = useRef<TextInput[]>([]);
 
   const {
@@ -37,7 +41,7 @@ export default function OTPVerificationForm() {
 
   const onSubmit = (data: FormData) => {
     // console.log(data);
-    // Handle OTP verification
+    props.onContinue();
   };
 
   const resendOTP = () => {
@@ -50,7 +54,7 @@ export default function OTPVerificationForm() {
   return (
     <>
       <View className="px-4 pt-4 self-start">
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity onPress={props.onBack}>
           <Ionicons name="chevron-back" size={28} color="#291539" />
         </TouchableOpacity>
       </View>
