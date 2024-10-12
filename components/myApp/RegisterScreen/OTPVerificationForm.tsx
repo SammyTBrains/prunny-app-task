@@ -9,7 +9,7 @@ type FormData = {
   otp: string;
 };
 
-export default function OTPVerification() {
+export default function OTPVerificationForm() {
   const [timer, setTimer] = useState(59);
   const router = useRouter();
 
@@ -46,10 +46,12 @@ export default function OTPVerification() {
   let canSubmit = getValues("otp").length === 4 && !errors.otp;
 
   return (
-    <View className="flex-1 bg-white px-4 pt-4">
-      <TouchableOpacity onPress={() => router.back()} className="self-start">
-        <Ionicons name="chevron-back" size={28} color="#291539" />
-      </TouchableOpacity>
+    <>
+      <View className="px-4 pt-4 self-start">
+        <TouchableOpacity onPress={() => router.back()}>
+          <Ionicons name="chevron-back" size={28} color="#291539" />
+        </TouchableOpacity>
+      </View>
 
       <View className="mt-9">
         <Text className="text-lg font-[roboto-bold] text-primary-dark">
@@ -95,7 +97,7 @@ export default function OTPVerification() {
           <TouchableOpacity onPress={resendOTP} disabled={timer > 0}>
             <Text
               className={`font-[roboto] ${
-                timer > 0 ? "text-gray-400" : "text-primary-dark"
+                timer > 0 ? "text-grey" : "text-primary-dark"
               }`}
             >
               Resend SMS
@@ -107,7 +109,7 @@ export default function OTPVerification() {
         </View>
 
         <TouchableOpacity
-          className="mt-60 rounded-full py-4 w-full"
+          className="mt-60 rounded-full py-4 w-80"
           onPress={handleSubmit(onSubmit)}
           style={
             canSubmit
@@ -121,6 +123,6 @@ export default function OTPVerification() {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </>
   );
 }

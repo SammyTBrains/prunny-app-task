@@ -1,3 +1,4 @@
+import OTPVerificationForm from "@/components/myApp/RegisterScreen/OTPVerificationForm";
 import PhoneNumberForm from "@/components/myApp/RegisterScreen/PhoneNumberForm";
 import {
   View,
@@ -11,7 +12,8 @@ export default function Register() {
     <SafeAreaView className="flex-1 bg-white items-center">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="w-[90%] items-center">
-          <PhoneNumberForm />
+          {/* <PhoneNumberForm /> */}
+          <OTPVerificationForm />
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
