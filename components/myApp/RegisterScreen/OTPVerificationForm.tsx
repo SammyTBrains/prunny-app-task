@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
@@ -12,6 +12,7 @@ type FormData = {
 export default function OTPVerificationForm() {
   const [timer, setTimer] = useState(59);
   const router = useRouter();
+  const inputRefs = useRef<TextInput[]>([]);
 
   const {
     control,
@@ -19,13 +20,14 @@ export default function OTPVerificationForm() {
     getValues,
     formState: { errors },
   } = useForm<FormData>({
-    mode: "onChange",
+    mode: "onBlur",
     defaultValues: {
       otp: "",
     },
   });
 
   useEffect(() => {
+    inputRefs.current = inputRefs.current.slice(0, 4);
     const interval = setInterval(() => {
       setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
     }, 1000);
@@ -81,7 +83,12 @@ export default function OTPVerificationForm() {
                       const newValue = value.split("");
                       newValue[index] = text;
                       onChange(newValue.join(""));
+                      if (text && index < 3) {
+                        // Move focus to the next input
+                        inputRefs.current[index + 1].focus();
+                      }
                     }}
+                    ref={(ref) => (inputRefs.current[index] = ref!)}
                   />
                 ))}
               </View>
