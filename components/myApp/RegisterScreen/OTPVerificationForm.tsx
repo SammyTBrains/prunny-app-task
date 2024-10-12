@@ -59,7 +59,7 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
         </TouchableOpacity>
       </View>
 
-      <View className="mt-9">
+      <View className="px-4 mt-9">
         <Text className="text-lg font-[roboto-bold] text-primary-dark">
           Kindly verify your number with the OTP you just received
         </Text>

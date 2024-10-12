@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import ProgressBar from "@/components/myApp/UI/ProgressBar";
 
 // Enum to represent different steps in the registration process
 enum RegistrationStep {
@@ -14,6 +15,8 @@ enum RegistrationStep {
   OTPVerification,
   // Add more steps here as needed
 }
+
+const TOTAL_STEPS = 2;
 
 export default function Register() {
   const [currentStep, setCurrentStep] = useState<RegistrationStep>(
@@ -63,6 +66,9 @@ export default function Register() {
 
   return (
     <SafeAreaView className="flex-1 bg-white items-center">
+      <View className="absolute right-12 top-[42px]">
+        <ProgressBar currentStep={currentStep + 1} totalSteps={TOTAL_STEPS} />
+      </View>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="w-[90%] items-center">{renderCurrentStep()}</View>
       </TouchableWithoutFeedback>
