@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
-import { useRouter } from "expo-router";
 import colors from "@/constants/myApp/colors";
 
 type FormData = {
