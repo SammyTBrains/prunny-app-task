@@ -9,16 +9,18 @@ import {
 } from "react-native";
 import ProgressBar from "@/components/myApp/UI/ProgressBar";
 import UserDetailsForm from "@/components/myApp/RegisterScreen/UserDetailsForm";
+import AddressForm from "@/components/myApp/RegisterScreen/AddressForm";
 
 // Enum to represent different steps in the registration process
 enum RegistrationStep {
   PhoneNumber,
   OTPVerification,
   UserDetails,
+  AddressDetails,
   // Add more steps here as needed
 }
 
-const TOTAL_STEPS = 3;
+const TOTAL_STEPS = 4;
 
 export default function Register() {
   const [currentStep, setCurrentStep] = useState<RegistrationStep>(
@@ -35,7 +37,10 @@ export default function Register() {
         setCurrentStep(RegistrationStep.UserDetails);
         break;
       case RegistrationStep.UserDetails:
-        console.log("Registration complete");
+        setCurrentStep(RegistrationStep.AddressDetails);
+        break;
+      case RegistrationStep.AddressDetails:
+        console.log("done");
         break;
       // Add more cases for additional steps
     }
@@ -49,6 +54,9 @@ export default function Register() {
         break;
       case RegistrationStep.UserDetails:
         setCurrentStep(RegistrationStep.OTPVerification);
+        break;
+      case RegistrationStep.AddressDetails:
+        setCurrentStep(RegistrationStep.UserDetails);
         break;
       // Add more cases for additional steps
     }
@@ -69,6 +77,8 @@ export default function Register() {
         return (
           <UserDetailsForm onContinue={handleContinue} onBack={handleBack} />
         );
+      case RegistrationStep.AddressDetails:
+        return <AddressForm onContinue={handleContinue} onBack={handleBack} />;
       // Add more cases for additional steps
       default:
         return null;
