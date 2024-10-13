@@ -139,7 +139,7 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
         </View>
 
         <TouchableOpacity
-          className="mt-60 rounded-full py-4 w-80"
+          className="mt-64 rounded-full py-4 w-80"
           onPress={handleSubmit(onSubmit)}
           style={
             isValid

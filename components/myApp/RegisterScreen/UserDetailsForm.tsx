@@ -30,7 +30,7 @@ export default function UserDetailsForm({
     setValue,
     formState: { errors, isValid },
   } = useForm<FormData>({
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues: {
       phoneNumber: "",
       lastName: "",
@@ -101,7 +101,7 @@ export default function UserDetailsForm({
                 required: "Last name is required",
               }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <View className="w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
+                <View className="w-80 mt-6 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
                   <TextInput
                     className="text-sm font-[roboto] text-primary-dark"
                     placeholder="Enter your lastname e.g Ogbensi"
@@ -125,7 +125,7 @@ export default function UserDetailsForm({
               }}
               render={({ field: { onChange, value } }) => (
                 <TouchableOpacity
-                  className="w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]"
+                  className="w-80 mt-6 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]"
                   onPress={() => setShowDatePicker(true)}
                 >
                   <Text className="text-sm font-[roboto] text-primary-dark">
@@ -167,6 +167,7 @@ export default function UserDetailsForm({
                     borderWidth: 1,
                     borderColor: "rgba(45, 17, 69, 0.06)",
                     borderRadius: 5,
+                    marginTop: 24,
                   }}
                   data={genderData}
                   labelField="label"
@@ -197,7 +198,7 @@ export default function UserDetailsForm({
           </View>
 
           <TouchableOpacity
-            className="mt-6 rounded-full py-4 w-80"
+            className="mt-28 rounded-full py-4 w-80"
             onPress={handleSubmit(onSubmit)}
             style={
               isValid
