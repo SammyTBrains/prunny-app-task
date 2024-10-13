@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "expo-router";
 import colors from "@/constants/myApp/colors";
@@ -24,7 +24,7 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
     getValues,
     formState: { errors },
   } = useForm<FormData>({
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues: {
       otp: "",
     },
@@ -65,6 +65,14 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
         </Text>
 
         <View className="mt-10">
+          <View className="flex flex-row justify-between">
+            <Text className="font-[roboto] text-sm text-primary-dark opacity-80">
+              Enter the 4 digit OTP
+            </Text>
+            <Text className="font-[roboto] text-sm text-primary">
+              00:{timer.toString().padStart(2, "0")}
+            </Text>
+          </View>
           <Controller
             control={control}
             rules={{
@@ -75,14 +83,17 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
               },
             }}
             render={({ field: { onChange, value } }) => (
-              <View className="flex-row justify-between">
+              <View className="flex-row justify-between mt-3">
                 {[0, 1, 2, 3].map((index) => (
                   <TextInput
                     key={index}
-                    className="w-14 h-14 border border-[#2d114510] rounded-[5px] text-center text-lg font-[roboto-bold]"
+                    className="w-[68px] h-[52px] border border-[#2d114510] rounded-[5px] text-center text-lg font-[roboto-bold]"
                     maxLength={1}
+                    placeholder="."
+                    placeholderTextColor="#2D114533"
                     keyboardType="number-pad"
                     value={value[index] || ""}
+                    secureTextEntry
                     onChangeText={(text) => {
                       const newValue = value.split("");
                       newValue[index] = text;
@@ -104,19 +115,17 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
           )}
         </View>
 
-        <View className="flex-row justify-between items-center mt-6">
+        <View className="flex-row gap-2 items-center mt-3">
+          <Ionicons name="chatbox-ellipses-outline" color="#291539" size={16} />
           <TouchableOpacity onPress={resendOTP} disabled={timer > 0}>
             <Text
-              className={`font-[roboto] ${
-                timer > 0 ? "text-grey" : "text-primary-dark"
+              className={`font-[roboto-medium] text-sm ${
+                timer > 0 ? "text-grey" : "text-[#291539]"
               }`}
             >
               Resend SMS
             </Text>
           </TouchableOpacity>
-          <Text className="font-[roboto] text-primary-dark">
-            00:{timer.toString().padStart(2, "0")}
-          </Text>
         </View>
 
         <TouchableOpacity
