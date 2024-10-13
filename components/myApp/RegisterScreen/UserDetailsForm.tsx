@@ -128,7 +128,7 @@ export default function UserDetailsForm({
                   className="w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]"
                   onPress={() => setShowDatePicker(true)}
                 >
-                  <Text className="font-[roboto] text-primary-dark">
+                  <Text className="text-sm font-[roboto] text-primary-dark">
                     {value.toDateString() || "Date of birth"}
                   </Text>
                 </TouchableOpacity>
@@ -172,6 +172,17 @@ export default function UserDetailsForm({
                   labelField="label"
                   valueField="value"
                   placeholder="Choose your gender"
+                  placeholderStyle={{
+                    color: colors.primaryDark50,
+                    fontSize: 14,
+                    lineHeight: 20,
+                  }}
+                  selectedTextStyle={{
+                    fontSize: 14,
+                    lineHeight: 20,
+                    fontFamily: "roboto",
+                    color: colors.primaryDark,
+                  }}
                   value={value}
                   onChange={(item) => {
                     onChange(item.value);
