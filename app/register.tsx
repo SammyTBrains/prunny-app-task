@@ -8,15 +8,17 @@ import {
   Keyboard,
 } from "react-native";
 import ProgressBar from "@/components/myApp/UI/ProgressBar";
+import UserDetailsForm from "@/components/myApp/RegisterScreen/UserDetailsForm";
 
 // Enum to represent different steps in the registration process
 enum RegistrationStep {
   PhoneNumber,
   OTPVerification,
+  UserDetails,
   // Add more steps here as needed
 }
 
-const TOTAL_STEPS = 2;
+const TOTAL_STEPS = 3;
 
 export default function Register() {
   const [currentStep, setCurrentStep] = useState<RegistrationStep>(
@@ -30,7 +32,9 @@ export default function Register() {
         setCurrentStep(RegistrationStep.OTPVerification);
         break;
       case RegistrationStep.OTPVerification:
-        // Handle OTP verification completion
+        setCurrentStep(RegistrationStep.UserDetails);
+        break;
+      case RegistrationStep.UserDetails:
         console.log("Registration complete");
         break;
       // Add more cases for additional steps
@@ -42,6 +46,9 @@ export default function Register() {
     switch (currentStep) {
       case RegistrationStep.OTPVerification:
         setCurrentStep(RegistrationStep.PhoneNumber);
+        break;
+      case RegistrationStep.UserDetails:
+        setCurrentStep(RegistrationStep.OTPVerification);
         break;
       // Add more cases for additional steps
     }
@@ -58,6 +65,10 @@ export default function Register() {
             onBack={handleBack}
           />
         );
+      case RegistrationStep.UserDetails:
+        return (
+          <UserDetailsForm onContinue={handleContinue} onBack={handleBack} />
+        );
       // Add more cases for additional steps
       default:
         return null;
@@ -67,7 +78,7 @@ export default function Register() {
   return (
     <SafeAreaView className="flex-1 bg-white items-center">
       <View className="absolute right-12 top-[42px]">
-        <ProgressBar currentStep={currentStep + 1} totalSteps={TOTAL_STEPS} />
+        <ProgressBar currentStep={currentStep} totalSteps={TOTAL_STEPS} />
       </View>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="w-[90%] items-center">{renderCurrentStep()}</View>
