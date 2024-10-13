@@ -86,7 +86,8 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
                 {[0, 1, 2, 3].map((index) => (
                   <TextInput
                     key={index}
-                    className="w-[68px] h-[52px] border border-[#2d114510] rounded-[5px] text-center text-lg font-[roboto-bold]"
+                    className="w-[68px] h-[52px] border border-[#2d114510] rounded-[5px] text-center text-lg font-[roboto-bold]
+                    text-primary-dark"
                     maxLength={1}
                     placeholder="."
                     placeholderTextColor="#2D114533"

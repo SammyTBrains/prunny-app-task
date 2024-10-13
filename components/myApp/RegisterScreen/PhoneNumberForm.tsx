@@ -115,7 +115,7 @@ export default function PhoneNumberForm(props: PhoneNumberFormProps) {
                     onChangeText={(text) => onChange(text)}
                     value={value}
                     keyboardType="phone-pad"
-                    className="text-sm font-[roboto]"
+                    className="text-sm font-[roboto] text-primary-dark"
                   />
                 </View>
               </View>

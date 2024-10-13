@@ -77,7 +77,7 @@ export default function LoginScreen() {
                       onBlur={onBlur}
                       onChangeText={(text) => onChange(text)}
                       value={value}
-                      className="text-sm font-[roboto]"
+                      className="text-sm font-[roboto] text-primary-dark"
                       placeholder="Phone Number"
                       placeholderTextColor={colors.primaryDark50}
                       keyboardType="phone-pad"
@@ -107,7 +107,7 @@ export default function LoginScreen() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <View className="w-80 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]">
                   <TextInput
-                    className="text-sm font-[roboto]"
+                    className="text-sm font-[roboto] text-primary-dark"
                     placeholder="Password"
                     placeholderTextColor={colors.primaryDark50}
                     onBlur={onBlur}
