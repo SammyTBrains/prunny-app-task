@@ -38,8 +38,8 @@ export default function PhoneNumberForm(props: PhoneNumberFormProps) {
   const {
     control,
     handleSubmit,
-    getValues,
-    formState: { errors },
+
+    formState: { errors, isValid },
   } = useForm<FormData>({
     mode: "onChange",
     defaultValues: {
@@ -51,9 +51,6 @@ export default function PhoneNumberForm(props: PhoneNumberFormProps) {
     // console.log(data);
     props.onContinue();
   };
-
-  let canSubmit =
-    getValues("phoneNumber").trim().length > 0 && !errors.phoneNumber;
 
   return (
     <>
@@ -140,11 +137,11 @@ export default function PhoneNumberForm(props: PhoneNumberFormProps) {
           className="mt-60 rounded-full py-4 w-80"
           onPress={handleSubmit(onSubmit)}
           style={
-            canSubmit
+            isValid
               ? { backgroundColor: colors.primary }
               : { backgroundColor: colors.primaryLight }
           }
-          disabled={!canSubmit}
+          disabled={!isValid}
         >
           <Text className="text-white text-center font-[roboto-medium] text-base">
             Continue

@@ -20,8 +20,7 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
   const {
     control,
     handleSubmit,
-    getValues,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormData>({
     mode: "onChange",
     defaultValues: {
@@ -47,8 +46,6 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
     setTimer(59);
     // Implement OTP resend logic here
   };
-
-  let canSubmit = getValues("otp").length === 4 && !errors.otp;
 
   return (
     <>
@@ -145,11 +142,11 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
           className="mt-60 rounded-full py-4 w-80"
           onPress={handleSubmit(onSubmit)}
           style={
-            canSubmit
+            isValid
               ? { backgroundColor: colors.primary }
               : { backgroundColor: colors.primaryLight }
           }
-          disabled={!canSubmit}
+          disabled={!isValid}
         >
           <Text className="text-white text-center font-[roboto-medium] text-base">
             Continue

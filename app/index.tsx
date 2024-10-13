@@ -27,8 +27,7 @@ export default function LoginScreen() {
   const {
     control,
     handleSubmit,
-    formState: { errors },
-    getValues,
+    formState: { errors, isValid },
   } = useForm<FormData>({
     mode: "onBlur",
     defaultValues: {
@@ -38,12 +37,6 @@ export default function LoginScreen() {
   });
 
   const onSubmit = () => {};
-
-  let canSubmit =
-    getValues("phoneNumber").trim().length > 0 &&
-    getValues("password").trim().length > 0 &&
-    !errors.phoneNumber &&
-    !errors.password;
 
   return (
     <SafeAreaView className="flex-1 bg-white items-center">
@@ -148,12 +141,12 @@ export default function LoginScreen() {
             <TouchableOpacity
               className="rounded-[80px] w-[246px] h-[54px] items-center justify-center"
               style={
-                canSubmit
+                isValid
                   ? { backgroundColor: colors.primary }
                   : { backgroundColor: colors.primaryLight }
               }
               onPress={handleSubmit(onSubmit)}
-              disabled={!canSubmit}
+              disabled={!isValid}
             >
               <Text className="font-[roboto-medium] text-white text-base">
                 Log In

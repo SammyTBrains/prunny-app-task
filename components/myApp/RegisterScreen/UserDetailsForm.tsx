@@ -28,7 +28,7 @@ export default function UserDetailsForm({
     control,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormData>({
     mode: "onBlur",
     defaultValues: {
@@ -197,9 +197,14 @@ export default function UserDetailsForm({
           </View>
 
           <TouchableOpacity
-            className="mt-10 rounded-full py-4 w-full"
+            className="mt-6 rounded-full py-4 w-80"
             onPress={handleSubmit(onSubmit)}
-            style={{ backgroundColor: colors.primary }}
+            style={
+              isValid
+                ? { backgroundColor: colors.primary }
+                : { backgroundColor: colors.primaryLight }
+            }
+            disabled={!isValid}
           >
             <Text className="text-white text-center font-[roboto-medium] text-base">
               Continue
