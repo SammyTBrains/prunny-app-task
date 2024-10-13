@@ -163,7 +163,7 @@ export default function UserDetailsForm({
                 style={{
                   width: 320,
                   height: 56,
-                  paddingLeft: 24,
+                  paddingHorizontal: 24,
                   paddingVertical: 15,
                   borderWidth: 1,
                   borderColor: "rgba(45, 17, 69, 0.06)",

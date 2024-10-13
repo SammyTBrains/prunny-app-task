@@ -113,7 +113,7 @@ export default function AddressForm({ onContinue, onBack }: AddressFormProps) {
                 style={{
                   width: 320,
                   height: 56,
-                  paddingLeft: 24,
+                  paddingHorizontal: 24,
                   paddingVertical: 15,
                   borderWidth: 1,
                   borderColor: "rgba(45, 17, 69, 0.06)",
@@ -149,7 +149,7 @@ export default function AddressForm({ onContinue, onBack }: AddressFormProps) {
         </View>
 
         <TouchableOpacity
-          className="mt-28 rounded-full py-4 w-80"
+          className="mt-52 rounded-full py-4 w-80"
           onPress={handleSubmit(onSubmit)}
           style={
             isValid
