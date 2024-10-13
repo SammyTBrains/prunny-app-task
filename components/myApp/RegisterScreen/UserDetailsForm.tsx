@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import colors from "@/constants/myApp/colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Picker } from "@react-native-picker/picker";
+import { Dropdown } from "react-native-element-dropdown";
 
 type FormData = {
   phoneNumber: string;
@@ -43,6 +43,11 @@ export default function UserDetailsForm({
     // console.log(data);
     onContinue();
   };
+
+  const genderData = [
+    { label: "Male", value: "Male" },
+    { label: "Female", value: "Female" },
+  ];
 
   return (
     <>
@@ -153,21 +158,25 @@ export default function UserDetailsForm({
                 required: "Gender is required",
               }}
               render={({ field: { onChange, value } }) => (
-                <View className="border border-[#2d114510] rounded-[5px]">
-                  <Picker
-                    selectedValue={value}
-                    onValueChange={(itemValue, itemIndex) =>
-                      onChange(itemValue)
-                    }
-                  >
-                    <Picker.Item label="Choose your gender" value="" />
-                    <Picker.Item label="Male" value="male" />
-                    <Picker.Item label="Female" value="female" />
-                    <Picker.Item label="Other" value="other" />
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                  </Picker>
-                </View>
+                <Dropdown
+                  style={{
+                    width: 320,
+                    height: 56,
+                    paddingLeft: 24,
+                    paddingVertical: 15,
+                    borderWidth: 1,
+                    borderColor: "rgba(45, 17, 69, 0.06)",
+                    borderRadius: 5,
+                  }}
+                  data={genderData}
+                  labelField="label"
+                  valueField="value"
+                  placeholder="Choose your gender"
+                  value={value}
+                  onChange={(item) => {
+                    onChange(item.value);
+                  }}
+                />
               )}
               name="gender"
             />
