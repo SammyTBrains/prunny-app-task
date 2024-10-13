@@ -124,29 +124,31 @@ export default function UserDetailsForm({
             }}
             render={({ field: { onChange, value } }) => (
               <TouchableOpacity
-                className="w-80 mt-6 h-14 pl-6 py-[15px] border border-[#2d114510] justify-center rounded-[5px]"
+                className="w-80 mt-6 h-14 pl-6 pr-2 py-[15px] border border-[#2d114510] flex-row justify-between 
+                rounded-[5px]"
                 onPress={() => setShowDatePicker(true)}
               >
                 <Text className="text-sm font-[roboto] text-primary-dark">
                   {value.toDateString() || "Date of birth"}
                 </Text>
+                {showDatePicker && (
+                  <DateTimePicker
+                    value={control._formValues.dateOfBirth}
+                    mode="date"
+                    display="default"
+                    onChange={(event, selectedDate) => {
+                      setShowDatePicker(false);
+                      if (selectedDate) {
+                        setValue("dateOfBirth", selectedDate);
+                      }
+                    }}
+                  />
+                )}
               </TouchableOpacity>
             )}
             name="dateOfBirth"
           />
-          {showDatePicker && (
-            <DateTimePicker
-              value={control._formValues.dateOfBirth}
-              mode="date"
-              display="default"
-              onChange={(event, selectedDate) => {
-                setShowDatePicker(false);
-                if (selectedDate) {
-                  setValue("dateOfBirth", selectedDate);
-                }
-              }}
-            />
-          )}
+
           {errors.dateOfBirth && (
             <Text className="text-red">{errors.dateOfBirth.message}</Text>
           )}
