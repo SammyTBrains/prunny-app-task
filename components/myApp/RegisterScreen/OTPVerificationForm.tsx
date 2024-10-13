@@ -64,7 +64,7 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
           Kindly verify your number with the OTP you just received
         </Text>
 
-        <View className="mt-10">
+        <View className="mt-12">
           <View className="flex flex-row justify-between">
             <Text className="font-[roboto] text-sm text-primary-dark opacity-80">
               Enter the 4 digit OTP
@@ -101,6 +101,19 @@ export default function OTPVerificationForm(props: OTPVerificationFormProps) {
                       if (text && index < 3) {
                         // Move focus to the next input
                         inputRefs.current[index + 1].focus();
+                      } else if (!text && index > 0) {
+                        // Move focus to the previous input when backspace is pressed
+                        inputRefs.current[index - 1].focus();
+                      }
+                    }}
+                    onKeyPress={({ nativeEvent }) => {
+                      if (
+                        nativeEvent.key === "Backspace" &&
+                        !value[index] &&
+                        index > 0
+                      ) {
+                        // Move focus to the previous input when backspace is pressed on an empty input
+                        inputRefs.current[index - 1].focus();
                       }
                     }}
                     ref={(ref) => (inputRefs.current[index] = ref!)}
